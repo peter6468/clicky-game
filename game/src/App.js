@@ -7,6 +7,9 @@ import Wrapper from './Components/Wrapper';
 import Body from './Components/Body';
 import friends from './friends.json';
 import Container from './Container';
+import Column from './Column';
+import Row from './Row';
+
 
 
 
@@ -39,11 +42,15 @@ class App extends Component {
           <Title>Click on an image to earn points, but do not click on any more than once!!!</Title>
          
           <Container>
+            <Row>
+              {this.state.friends.map(friend => (
+              <Column size ="md-3 sm-6">
             {friends.map((e, i) => {
                 return <FriendCard handleClick={this.testOnClick} id={e.id} image={e.image} name={e.name}/>
             })}
-          
-           
+              </Column>
+              ))}
+           </Row>
           </Container>
       
       </Wrapper>
