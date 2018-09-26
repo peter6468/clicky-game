@@ -1,5 +1,5 @@
-import Ract from 'react';
-import './FreindCard.css';
+import React from 'react';
+import './FriendCard.css';
 
 const FreindCard = props => (
     <div className = "card"
