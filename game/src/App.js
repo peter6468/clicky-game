@@ -6,6 +6,7 @@ import Title from './Components/Title';
 import Wrapper from './Components/Wrapper';
 import Body from './Components/Body';
 import friends from './friends.json';
+import Container from './Container';
 
 
 
@@ -28,7 +29,7 @@ class App extends Component {
     return (
       <Wrapper> 
         <Nav
-          title="Clicky Game"
+          title="Giphy Clicky Game"
          
           score = {this.state.currentScore}
           topScore= {this.state.topScore}
@@ -37,13 +38,13 @@ class App extends Component {
 
           <Title>Click on an image to earn points, but do not click on any more than once!!!</Title>
          
-          <Body>
+          <Container>
             {friends.map((e, i) => {
                 return <FriendCard handleClick={this.testOnClick} id={e.id} image={e.image} name={e.name}/>
             })}
           
            
-          </Body>
+          </Container>
       
       </Wrapper>
       
