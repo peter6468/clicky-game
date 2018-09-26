@@ -4,7 +4,6 @@ import FriendCard from './Components/FriendCard';
 import Nav from './Components/Nav';
 import Title from './Components/Title';
 import Wrapper from './Components/Wrapper';
-import Body from './Components/Body';
 import friends from './friends.json';
 import Container from './Container';
 import Column from './Column';
@@ -43,18 +42,18 @@ class App extends Component {
          
           <Container>
             <Row>
-              {this.state.friends.map(friend => (
+            {friends.map(friend => (
               <Column size ="md-3 sm-6">
-            {friends.map((e, i) => {
-                return <FriendCard handleClick={this.testOnClick} id={e.id} image={e.image} name={e.name}/>
-            })}
+                <FriendCard
+                  key={friend.id}
+                  id={friend.id}
+                  image={friend.image}
+                />
               </Column>
               ))}
            </Row>
           </Container>
-      
-      </Wrapper>
-      
+      </Wrapper> 
     );
   }
 }
