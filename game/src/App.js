@@ -10,23 +10,49 @@ import Column from './Column';
 import Row from './Row';
 
 
-
-
-
+function shuffleFriends(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
 
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      currentScore: 1,
-      topScore: 0
+      state = {
+        currentScore: 0,
+        topScore: 0,
+        rightWrong: "",
+        clicked: [],
+      };
+  
+  handleClick = id => {
+    if (this.state.clicked.indexOf(id) ===-1) {
+      this.handleIncrement();
+      this.setState({ clikced: this.state.clicked.concat(id) });
+    } else {
+      this.handleReset();
     }
-  }
-  testOnClick(id){
-    alert('this works');
-  }
+  };
 
+  handleIncrement = () => {
+    const newScore =this.state.currentScore +1;
+    this.setState({
+      currentScore: newScore,
+      rightWrong: ""
+    });
+    if (newScore === 12) {
+      this.setState({ rightWrong: "You Rock!"})
+    }
+    this.handleShuffle;
+  };
+
+  handleShuffle = () => {
+    let shuffledFriends =shuffleFriends(friends);
+    this.setState({ friends: shuffledFriends });
+  };
+  
   render() {
     return (
       <Wrapper> 
@@ -57,5 +83,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
