@@ -10,17 +10,17 @@ import Column from './Column';
 import Row from './Row';
 
 
-function shuffleFriends(a) {
-  for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+function shuffleFriends(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
-  return a;
+  return array;
 };
-
 
 class App extends Component {
       state = {
+        friends,
         currentScore: 0,
         topScore: 0,
         rightWrong: "",
@@ -30,7 +30,7 @@ class App extends Component {
   handleClick = id => {
     if (this.state.clicked.indexOf(id) ===-1) {
       this.handleIncrement();
-      this.setState({ clikced: this.state.clicked.concat(id) });
+      this.setState({ clicked: this.state.clicked.concat(id) });
     } else {
       this.handleReset();
     }
@@ -42,38 +42,55 @@ class App extends Component {
       currentScore: newScore,
       rightWrong: ""
     });
-    if (newScore === 12) {
-      this.setState({ rightWrong: "You Rock!"})
+    if (newScore >= this.state.topScore) {
+      this.setState({ topScore: newScore});
     }
-    this.handleShuffle;
+    else if (newScore === 12) {
+      this.setState({ rightWrong: "You ROCK!!!"});
+    }
+    this.handleShuffle();
+  };
+
+  handleReset = () => {
+    this.setState({
+      currentScore:0,
+      topScore: this.state.topScore,
+      rightWrong: "Nope!:-(",
+      clicked: []
+    })
+    this.handleShuffle();
   };
 
   handleShuffle = () => {
     let shuffledFriends =shuffleFriends(friends);
     this.setState({ friends: shuffledFriends });
   };
+
   
   render() {
     return (
       <Wrapper> 
         <Nav
           title="Giphy Clicky Game"
-         
+          rightWrong={this.state.rightWrong}
           score = {this.state.currentScore}
           topScore= {this.state.topScore}
-          //rightWrong= {this.state.rightWrong}
           />
 
           <Title>Click on an image to earn points, but do not click on any more than once!!!</Title>
          
           <Container>
             <Row>
-            {friends.map(friend => (
+            {this.state.friends.map(friend => (
               <Column size ="md-3 sm-6">
                 <FriendCard
                   key={friend.id}
                   id={friend.id}
                   image={friend.image}
+                  handleClick={this.handleClick}
+                  handleIncrement={this.handleIncrement}
+                  handleReset={this.handleReset}
+                  handleShuffle ={this.handleShuffle}
                 />
               </Column>
               ))}
